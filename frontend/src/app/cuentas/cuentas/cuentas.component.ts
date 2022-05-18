@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cuentas.component.css']
 })
 export class CuentasComponent implements OnInit {
+  public nombreCuenta = 'Cuentas';
+  public nombreUsuario = 'Usuario'
 
   constructor() { }
 

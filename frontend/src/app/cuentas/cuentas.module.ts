@@ -4,10 +4,9 @@ import { CommonModule } from '@angular/common';
 import { CuentasRoutingModule } from './cuentas-routing.module';
 import { CuentasComponent } from './cuentas/cuentas.component';
 
-
 @NgModule({
   declarations: [
-    CuentasComponent
+    CuentasComponent,
   ],
   imports: [
     CommonModule,
