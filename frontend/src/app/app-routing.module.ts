@@ -12,6 +12,14 @@ const routes: Routes = [
       loadChildren: () => import("./cuentas/cuentas.module").then((m) => m.CuentasModule)
     },
     {
+    path: "nuevacuenta",
+    loadChildren: () => import("./nuevacuenta/nuevacuenta.module").then((m) => m.NuevacuentaModule)
+    },
+    {
+    path: "miscuentas",
+    loadChildren: () => import("./miscuentas/miscuentas.module").then((m) => m.MiscuentasModule)
+    },
+    {
     path: "not-found",
     component: NotFoundComponent,
     },
