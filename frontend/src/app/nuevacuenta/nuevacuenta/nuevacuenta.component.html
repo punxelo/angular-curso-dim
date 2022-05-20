@@ -1,78 +1,23 @@
-<main class="container-fluid">
-        <div class="contenedor subtitle--modifier justify-content-center media margin_top">
-            <h1 class="title--active">Registre su nueva cuenta:</h1>
-        </div>
-        <div class="contenedor nav_contenedor contenedor--modifier">
-          <form>
-            <div class="form-group">
-                <label for="formGroupExampleInput2">Nombre cuenta:</label>
-                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Introduzca un nombre para su cuenta">
-            </div>
-            <div class="form-group">
-              <label for="formGroupExampleInput">Nombre:</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Introduzca su nombre completo">
-          </div>
-            <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
-              <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="ejemplo@ejemplo.com">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-2 col-form-label">Password:</label>
-              <div class="col-sm-10">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-              </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputPassword4" class="col-sm-2 col-form-label">Confirme password:</label>
-                <div class="col-sm-10">
-                  <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                </div>
-            </div>
-            <div class="form-check mb-2 mr-sm-2">
-                <input class="form-check-input" type="checkbox" id="inlineFormCheck">
-                <label class="form-check-label" for="inlineFormCheck">
-                  Recordarme
-                </label>
-            </div>
-            <fieldset class="form-group">
-              <div class="row">
-                <legend class="col-form-label col-sm-2 pt-0">Perfil:</legend>
-                <div class="col-sm-10">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      Propietario de negocio
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                      Gestor
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <div class="form-group row">
-              <div class="col-sm-2">Confirme</div>
-              <div class="col-sm-10">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="gridCheck1">
-                  <label class="form-check-label" for="gridCheck1">
-                    Acepta las condiciones de uso de GVNEG
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row align-items">
-              <div class="col-sm-10 align-items">
-                <a href="index.html"><input class="btn btn-secondary" type="button" value="Cancelar"></a>
-                <input class="btn btn-secondary" type="reset" value="Borrar">
-                <input class="btn btn-primary" type="submit" value="Registrar">
-              </div>
-            </div>
-          </form>
-        </div>
-    </main>
+<body>
+  <h2>CREA TU NUEVA CUENTA</h2> <br>
+  <section>
+
+  <div class="form-group mt-auto col-md-3">
+    <label >Nombre:</label>
+    <input type="name" [(ngModel)]="nuevacuenta.nombre" class="form-control" id="nombre" placeholder="Nombre">
+  </div>
+  <div class="form-group mt-5 col-md-3">
+    <label >Descripción:</label>
+    <input type="name" [(ngModel)]="nuevacuenta.descripcion" class="form-control" id="descripcion" placeholder="Descripcion">
+  </div>
+
+  </section>
+
+  <section #botones class="mt-5">
+    <button type="reset" class="btn btn-secondary">Borrar </button>&nbsp;
+    <button type="submit" class="btn btn-primary"> Aceptar</button>
+  </section>
+  <br>
+
+</body>
+

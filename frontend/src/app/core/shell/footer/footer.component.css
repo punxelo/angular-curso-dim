@@ -124,6 +124,9 @@ body{
   background: linear-gradient(#5a5c5f 0%, #000000 100%);
   display: flex;
   justify-content: space-around;
+  width: 100%;
+  bottom: 0;
+  position: fixed;
 }
 
 .footer__caption{

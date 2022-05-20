@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NuevacuentaRoutingModule } from './nuevacuenta-routing.module';
 import { NuevacuentaComponent } from './nuevacuenta/nuevacuenta.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { NuevacuentaComponent } from './nuevacuenta/nuevacuenta.component';
   ],
   imports: [
     CommonModule,
-    NuevacuentaRoutingModule
+    NuevacuentaRoutingModule,
+    FormsModule
   ]
 })
 export class NuevacuentaModule { }
