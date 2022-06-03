@@ -8,7 +8,7 @@ import { Micuenta } from '../models/micuenta';
   styleUrls: ['./micuenta-item.component.css']
 })
 export class MicuentaItemComponent implements OnInit {
-  @Input() micuenta: Micuenta = new CuentaImpl('');
+  @Input() micuenta!: Micuenta;
 
   constructor() { }
 

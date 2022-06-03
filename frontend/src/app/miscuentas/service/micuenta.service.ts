@@ -11,7 +11,7 @@ import { Micuenta } from '../models/micuenta';
 })
 export class MicuentaService {
   private host: string = environment.host;
-  private urlEndPoint: string = `${this.host}cuenta`;
+  private urlEndPoint: string = `${this.host}cuentas`;
 
   constructor(
     private http: HttpClient,
@@ -31,7 +31,7 @@ export class MicuentaService {
 
     mapearMiCuenta(micuentaApi: any): CuentaImpl {
     return new CuentaImpl(
-    micuentaApi.nombre);
+    micuentaApi.nombreCuenta);
     }
 
     create(micuenta: Micuenta): void {
