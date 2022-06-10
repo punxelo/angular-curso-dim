@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CuentaImpl } from '../models/cuenta-impl';
+import { MiCuentaImpl } from '../models/micuenta-impl';
 import { Micuenta } from '../models/micuenta';
 
 @Component({

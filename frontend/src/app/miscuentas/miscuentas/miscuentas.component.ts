@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuxiliarService } from 'src/app/service/auxiliar.service';
-import { CuentaImpl } from '../models/cuenta-impl';
+import { MiCuentaImpl } from '../models/micuenta-impl';
 import { Micuenta } from '../models/micuenta';
 import { MicuentaService } from '../service/micuenta.service';
 
@@ -12,7 +12,7 @@ import { MicuentaService } from '../service/micuenta.service';
 export class MiscuentasComponent implements OnInit {
   miscuentas: Micuenta[] = [];
   todasMiscuentas: Micuenta[] = [];
-  micuentaVerDatos: Micuenta = new CuentaImpl('');
+  micuentaVerDatos: Micuenta = new MiCuentaImpl('');
   numPaginas: number = 0;
 
   constructor(

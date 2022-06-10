@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuxiliarService } from 'src/app/service/auxiliar.service';
 import { environment } from 'src/environments/environment';
-import { CuentaImpl } from '../models/cuenta-impl';
+import { MiCuentaImpl } from '../models/micuenta-impl';
 import { Micuenta } from '../models/micuenta';
 
 @Injectable({
@@ -29,8 +29,8 @@ export class MicuentaService {
     return miscuentas;
     }
 
-    mapearMiCuenta(micuentaApi: any): CuentaImpl {
-    return new CuentaImpl(
+    mapearMiCuenta(micuentaApi: any): MiCuentaImpl {
+    return new MiCuentaImpl(
     micuentaApi.nombreCuenta);
     }
 

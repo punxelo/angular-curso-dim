@@ -1,3 +1,3 @@
 export interface Micuenta {
-  nombre:string;
+  nombre: string;
 }
