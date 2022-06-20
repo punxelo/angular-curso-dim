@@ -1,0 +1,30 @@
+<main>
+  <div class="container mt-auto">
+      <br>
+      <h3>Movimientos</h3>
+
+      <div *ngFor="let ingreso of ingresos">
+          <app-ingreso-item
+              [ingreso]="ingreso"
+
+              >
+          </app-ingreso-item>
+
+          <pre>{{ ingreso | json }}</pre>
+
+      </div>
+
+      <div *ngFor="let gasto of gastos">
+          <app-gasto-item
+              [gasto]="gasto"
+
+              >
+          </app-gasto-item>
+
+          <pre>{{ gasto | json }}</pre>
+
+      </div>
+      <br>
+
+  </div>
+</main>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CuentasComponent } from '../cuentas/cuentas/cuentas.component';
+import { MicuentaConsultarComponent } from './miscuentas/micuenta-consultar/micuenta-consultar.component';
 import { MiscuentasComponent } from './miscuentas/miscuentas.component';
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'cuentas',
     component: CuentasComponent
+  },
+  {
+    path: 'consultar/:id',
+    component: MicuentaConsultarComponent
   }
 ];
 

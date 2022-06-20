@@ -3,6 +3,7 @@ import { AuxiliarService } from 'src/app/service/auxiliar.service';
 import { MiCuentaImpl } from '../models/micuenta-impl';
 import { Micuenta } from '../models/micuenta';
 import { MicuentaService } from '../service/micuenta.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-miscuentas',
@@ -12,12 +13,13 @@ import { MicuentaService } from '../service/micuenta.service';
 export class MiscuentasComponent implements OnInit {
   miscuentas: Micuenta[] = [];
   todasMiscuentas: Micuenta[] = [];
-  micuentaVerDatos: Micuenta = new MiCuentaImpl('');
+  micuentaVerDatos: Micuenta = new MiCuentaImpl();
   numPaginas: number = 0;
 
   constructor(
   private micuentaService: MicuentaService,
-  private auxService: AuxiliarService) { }
+  private auxService: AuxiliarService,
+  private router : Router) { }
 
   ngOnInit(): void {
   this.micuentaService.getMisCuentas().subscribe((response) => this.miscuentas = this.micuentaService.extraerMisCuentas(response));
@@ -28,9 +30,15 @@ export class MiscuentasComponent implements OnInit {
   this.micuentaVerDatos = micuenta;
   }
 
-  onMicuentaEliminar(micuenta: Micuenta): void {
+  onMiCuentaEliminar(micuenta: Micuenta): void {
   console.log(`La cuenta "${micuenta.nombre}" ha sido eliminada`);
   this.miscuentas = this.miscuentas.filter(p => micuenta !== p)
+  }
+
+  onMiCuentaConsultar(micuenta: Micuenta){
+    this.verDatos(micuenta);
+    let url = `miscuentas/consultar/${micuenta.micuentaId}`;
+    this.router.navigate([url])
   }
 
   getTodasMisCuentas(): void {
