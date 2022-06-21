@@ -41,7 +41,7 @@ export class MovimientoService {
 
   extraerGastos(respuestaApi: any): GastoImpl[] {
     const gastos: GastoImpl[] = [];
-    respuestaApi._embedded.gaastos.forEach((p: any) => {
+    respuestaApi._embedded.gastos.forEach((p: any) => {
       gastos.push(this.mapearGastos(p));
     });
     return gastos;
@@ -63,7 +63,7 @@ export class MovimientoService {
     gasto.concepto = gastoAPI.concepto;
     gasto.importe = gastoAPI.importe;
     gasto.fecha = gastoAPI.fecha;
-    gasto.usuario = gastoAPI.usuario;
+    gasto.usuario = gastoAPI.usario;
     return gasto;
   }
 
@@ -71,5 +71,33 @@ export class MovimientoService {
     let posicionFinal: number = url.lastIndexOf('/');
     let numId: string = url.slice(posicionFinal + 1, url.length);
     return numId;
+  }
+
+  deleteIngreso(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.urlEndPointIngresos}/${id}`).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
+  }
+
+  deleteGasto(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.urlEndPointGastos}/${id}`).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
   }
 }

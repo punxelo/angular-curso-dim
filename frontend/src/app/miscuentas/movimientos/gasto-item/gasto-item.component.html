@@ -1,1 +1,20 @@
-<p>gasto-item works!</p>
+<main>
+  <div class="container mt-auto">
+
+      <div class="row justify-content-center">
+          <div class="col-5">
+              <li class="list-group-item">{{ gasto.fecha }} {{ gasto.concepto }}{{ gasto.usuario }}{{ gasto.importe }}</li>
+          </div>
+          <div class="col-1">
+            <a>
+                <fa-icon [icon]="faEditPen" class="fa-2x" (click)="editarIngreso()"></fa-icon>
+            </a>
+          </div>
+          <div class="col-1">
+            <a>
+                <fa-icon [icon]="faBorrarTrash" class="fa-2x" (click)="eliminarIngreso()"></fa-icon>
+            </a>
+          </div>
+      </div>
+  </div>
+</main>

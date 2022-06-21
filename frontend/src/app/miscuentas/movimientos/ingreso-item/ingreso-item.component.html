@@ -3,23 +3,18 @@
 
       <div class="row justify-content-center">
           <div class="col-5">
-              <li class="list-group-item">{{ ingreso.concepto }}</li>
+              <li class="list-group-item">{{ ingreso.fecha }} {{ ingreso.concepto }}{{ ingreso.estado }}{{ ingreso.importe }}</li>
           </div>
-          <!-- <div class="col-1">
+          <div class="col-1">
               <a>
-                  <fa-icon [icon]="faMagnifyingGlass" class="fa-2x"></fa-icon>
+                  <fa-icon [icon]="faEditPen" class="fa-2x" (click)="editarIngreso()"></fa-icon>
               </a>
           </div>
           <div class="col-1">
               <a>
-                  <fa-icon [icon]="faPencil" class="fa-2x" (click)="editarAO()"></fa-icon>
+                  <fa-icon [icon]="faBorrarTrash" class="fa-2x" (click)="eliminarIngreso()"></fa-icon>
               </a>
           </div>
-          <div class="col-1">
-              <a>
-                  <fa-icon [icon]="faTrashCan" class="fa-2x" (click)="eliminarAO()"></fa-icon>
-              </a>
-          </div>-->
       </div>
 
   </div>

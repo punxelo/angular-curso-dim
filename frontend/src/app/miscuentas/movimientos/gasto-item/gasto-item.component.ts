@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { GastoImpl } from '../../models/gasto-impl';
 
 @Component({
@@ -8,13 +9,26 @@ import { GastoImpl } from '../../models/gasto-impl';
 })
 export class GastoItemComponent implements OnInit {
 
+
+  faEditPen = faPenToSquare;
+  faBorrarTrash = faTrashCan;
+
   @Input() gasto: GastoImpl = new GastoImpl();
-  // @Output() actividadOperativaEliminar = new EventEmitter<ActividadoperativaImpl>();
-  // @Output() actividadOperativaEditar = new EventEmitter<ActividadoperativaImpl>();
+  @Output() gastoEliminar = new EventEmitter<GastoImpl>();
+  @Output() gastoEditar = new EventEmitter<GastoImpl>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  eliminarIngreso(): void{
+    if (confirm(`Eliminar el siguiente gasto:  ${this.gasto.concepto}`)){
+      this.gastoEliminar.emit(this.gasto);
+    }
+  }
+
+  editarIngreso(): void{
+    this.gastoEditar.emit(this.gasto);
+  }
 }

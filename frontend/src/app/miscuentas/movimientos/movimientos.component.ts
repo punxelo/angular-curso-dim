@@ -27,9 +27,13 @@ export class MovimientosComponent implements OnInit {
     this.gastos = this.movimientoService.extraerGastos(res));
   }
 
-  // onIngresoEliminar(ingreso: ActividadoperativaImpl){
-  //   this.eventoService.deleteActividadOperativa(actividadoperativa.eventoId).subscribe();
-  // }
+  onIngresoEliminar(ingreso: IngresoImpl){
+    this.movimientoService.deleteIngreso(ingreso.movimientoId).subscribe();
+  }
+
+  onGastoEliminar(gasto: GastoImpl){
+    this.movimientoService.deleteGasto(gasto.movimientoId).subscribe();
+  }
 
   // onActividadOperativaEditar(actividadoperativa: ActividadoperativaImpl){
   //   this.actividadoperativaVerDatos = actividadoperativa;

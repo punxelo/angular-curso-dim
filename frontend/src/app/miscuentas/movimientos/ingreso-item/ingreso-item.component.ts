@@ -1,5 +1,9 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { IngresoImpl } from '../../models/ingreso-impl';
+import { FaDuotoneIconComponent } from '@fortawesome/angular-fontawesome/icon/duotone-icon.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-ingreso-item',
@@ -8,13 +12,26 @@ import { IngresoImpl } from '../../models/ingreso-impl';
 })
 export class IngresoItemComponent implements OnInit {
 
+  faEditPen = faPenToSquare;
+  faBorrarTrash = faTrashCan;
+
+
   @Input() ingreso: IngresoImpl = new IngresoImpl();
-  // @Output() actividadOperativaEliminar = new EventEmitter<ActividadoperativaImpl>();
-  // @Output() actividadOperativaEditar = new EventEmitter<ActividadoperativaImpl>();
+  @Output() ingresoEliminar = new EventEmitter<IngresoImpl>();
+  @Output() ingresoEditar = new EventEmitter<IngresoImpl>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  eliminarIngreso(): void{
+    if (confirm(`Eliminar el siguiente ingreso:  ${this.ingreso.concepto}`)){
+      this.ingresoEliminar.emit(this.ingreso);
+    }
+  }
+
+  editarIngreso(): void{
+    this.ingresoEditar.emit(this.ingreso);
+  }
 }
