@@ -27,7 +27,7 @@ export class MicuentaConsultarComponent implements OnInit {
     return this.activatedRoute.snapshot.params['id'];
   }
 
-  onConsultarOperacion(): void {
+  onConsultarMicuenta(): void {
     this.micuentaService.updateMiCuenta(this.micuenta).subscribe();
     this.router.navigate(['/cuentas']);
   }

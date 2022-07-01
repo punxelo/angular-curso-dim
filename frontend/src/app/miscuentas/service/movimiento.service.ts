@@ -33,17 +33,21 @@ export class MovimientoService {
 
   extraerIngresos(respuestaApi: any): IngresoImpl[] {
     const ingresos: IngresoImpl[] = [];
-    respuestaApi._embedded.ingresos.forEach((p: any) => {
-      ingresos.push(this.mapearIngresos(p));
-    });
+    if( respuestaApi._embedded.ingresos){
+      respuestaApi._embedded.ingresos.forEach((p: any) => {
+        ingresos.push(this.mapearIngresos(p));
+      });
+    }
     return ingresos;
   }
 
   extraerGastos(respuestaApi: any): GastoImpl[] {
     const gastos: GastoImpl[] = [];
-    respuestaApi._embedded.gastos.forEach((p: any) => {
-      gastos.push(this.mapearGastos(p));
-    });
+    if(respuestaApi._embedded.gastos){
+      respuestaApi._embedded.gastos.forEach((p: any) => {
+        gastos.push(this.mapearGastos(p));
+      });
+    }
     return gastos;
   }
 
@@ -73,6 +77,7 @@ export class MovimientoService {
     return numId;
   }
 
+  // DELETEs
   deleteIngreso(id: string): Observable<any> {
     return this.http.delete<any>(`${this.urlEndPointIngresos}/${id}`).pipe(
       catchError((e) => {
@@ -89,6 +94,37 @@ export class MovimientoService {
 
   deleteGasto(id: string): Observable<any> {
     return this.http.delete<any>(`${this.urlEndPointGastos}/${id}`).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
+  }
+
+  //POSTs
+  addIngreso(ingreso: IngresoImpl): Observable<any> {
+    return this.http.post(
+      `${this.urlEndPointIngresos}`, ingreso).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
+  }
+
+  //PUTs
+  updateIngreso(ingreso: IngresoImpl): Observable<any> {
+    return this.http.patch(`${this.urlEndPointIngresos}/${ingreso.movimientoId}`, ingreso).pipe(
       catchError((e) => {
         if (e.status === 400) {
           return throwError(() => new Error(e));

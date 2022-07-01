@@ -7,15 +7,24 @@
           </div>
           <div class="col-1">
               <a>
-                  <fa-icon [icon]="faEditPen" class="fa-2x" (click)="editarIngreso()"></fa-icon>
+                  <fa-icon
+                  [icon]="faEditPen"
+                  class="fa-2x"
+                  (click)="editarIngreso(ingreso)"
+                  ></fa-icon>
               </a>
           </div>
           <div class="col-1">
               <a>
-                  <fa-icon [icon]="faBorrarTrash" class="fa-2x" (click)="eliminarIngreso()"></fa-icon>
+                  <fa-icon
+                  [icon]="faBorrarTrash"
+                  class="fa-2x"
+                  (click)="eliminarIngreso()"
+                  ></fa-icon>
               </a>
           </div>
       </div>
 
   </div>
-</main>
+<main>
+

@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { GastoImpl } from '../models/gasto-impl';
 import { IngresoImpl } from '../models/ingreso-impl';
+import { MovimientoImpl } from '../models/movimiento-impl';
 import { MovimientoService } from '../service/movimiento.service';
 
 @Component({
@@ -11,43 +15,82 @@ import { MovimientoService } from '../service/movimiento.service';
 })
 export class MovimientosComponent implements OnInit {
 
+  movimientoSeleccionado: any = new MovimientoImpl();
   ingresos: IngresoImpl[] = [];
   gastos: GastoImpl[] = [];
   ingresosVerDatos: IngresoImpl = new IngresoImpl();
   gastosVerDatos: GastoImpl = new GastoImpl();
+  gastosNuevos: GastoImpl = new GastoImpl();
+  private host: string = environment.host;
+  private urlEndPoint: string = `${this.host}cuentas`
+  @ViewChild('addForm') addForm?: NgForm;
+  @ViewChild('cancelar', { static: false }) botonCancelar: ElementRef | undefined;
+  @ViewChild('nuevo', { static: false }) botonNuevoIngreso: ElementRef | undefined;
+  id:string='';
+
   constructor(private activatedRoute: ActivatedRoute,
     private router : Router,
     private movimientoService: MovimientoService) { }
 
   ngOnInit(): void {
-    let id: string = this.activatedRoute.snapshot.params['id'];
-    this.movimientoService.getMovimientosCuenta(id).subscribe((res) =>
+    debugger;
+    this.id = this.activatedRoute.snapshot.params['id'];
+    this.listarMovimientos();
+
+    this.ingresosVerDatos.estado = `${this.urlEndPoint}/${this.id}`;
+    this.gastosVerDatos.cuenta = `${this.urlEndPoint}/${this.id}`;
+  }
+
+  listarMovimientos(){
+    this.movimientoService.getMovimientosCuenta(this.id).subscribe((res) =>
     this.ingresos = this.movimientoService.extraerIngresos(res));
-    this.movimientoService.getMovimientosCuenta(id).subscribe((res) =>
+    this.movimientoService.getMovimientosCuenta(this.id).subscribe((res) =>
     this.gastos = this.movimientoService.extraerGastos(res));
   }
 
   onIngresoEliminar(ingreso: IngresoImpl){
-    this.movimientoService.deleteIngreso(ingreso.movimientoId).subscribe();
+    this.movimientoService.deleteIngreso(ingreso.movimientoId).subscribe(
+      () => {this.listarMovimientos();}
+    );
   }
 
   onGastoEliminar(gasto: GastoImpl){
     this.movimientoService.deleteGasto(gasto.movimientoId).subscribe();
   }
 
-  // onActividadOperativaEditar(actividadoperativa: ActividadoperativaImpl){
-  //   this.actividadoperativaVerDatos = actividadoperativa;
-  //   let url = `operaciones/actividadesoperativas/editar/${actividadoperativa.eventoId}`;
-  //   this.router.navigate([url])
-  // }
+  onAddIngreso(addForm: NgForm) {
+    debugger;
+    this.movimientoSeleccionado.cuenta = `${this.urlEndPoint}/${this.id}`
+    if(!this.movimientoSeleccionado.movimientoId){
+      this.movimientoService.addIngreso(this.movimientoSeleccionado).subscribe(
+        (response) =>{
+          debugger;
+          const ing = this.movimientoService.mapearIngresos(response);
+          this.movimientoSeleccionado = new MovimientoImpl();
+          this.botonCancelar?.nativeElement.click();
+          this.listarMovimientos();
+        } );
+    }else{
+      this.movimientoService.updateIngreso(this.movimientoSeleccionado).subscribe(
+        (response) =>{
+          debugger;
+          const ing = this.movimientoService.mapearIngresos(response);
+          this.movimientoSeleccionado = new MovimientoImpl();
+          this.botonCancelar?.nativeElement.click();
+          this.listarMovimientos();
+        } );
+    }
+  }
+  onClear() {
+    debugger;
+    this.movimientoSeleccionado = new MovimientoImpl();
+    this.addForm?.reset();
+  }
 
-  // onGestionJudicialEliminar(gestionjudicial: GestionjudicialImpl){
-  //   this.eventoService.deleteGestionJudicial(gestionjudicial.eventoId).subscribe();
-  // }
+  onIngresoEditar(movimiento: any) {
+    debugger;
+    this.movimientoSeleccionado = movimiento;
+    this.botonNuevoIngreso?.nativeElement.click();
+  }
 
-  // onGestionJudicialEditar(gestionjudicial: GestionjudicialImpl){
-  //   this.gestionjudicialVerDatos = gestionjudicial;
-  //   let url = `operaciones/gestionesjudiciales/editar/${gestionjudicial.eventoId}`;
-  //   this.router.navigate([url])
-  // }
 }

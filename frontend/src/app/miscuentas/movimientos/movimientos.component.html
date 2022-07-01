@@ -6,6 +6,7 @@
       <div *ngFor="let ingreso of ingresos">
           <app-ingreso-item
               [ingreso]="ingreso"
+              (ingresoEditar)="onIngresoEditar($event)"
               (ingresoEliminar)="onIngresoEliminar($event)"
 
               >
@@ -26,6 +27,154 @@
 
       </div>
       <br>
-
+  <!-- Botones de la interfaz principal -->
+  <div class="col">
+    <span class="pe-2">
+      <button type="button" class="btn btn-primary btn-sm pr-3" routerLink="/">
+        Aceptar
+      </button>
+    </span>
+    <span class="pe-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#addIngresoModal"
+        #nuevo
+      >
+        Añadir Ingreso
+      </button>
+    </span>
   </div>
-</main>
+
+
+  <!-- MODAL (con form) -->
+  <div
+    class="modal fade"
+    id="addIngresoModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addIngresoLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addIngreso">
+            <span *ngIf="!movimientoSeleccionado.movimientoId">Nuevo Ingreso</span>
+            <span *ngIf="movimientoSeleccionado.movimientoId"> Modifique aquí su ingreso:</span>
+          </h2>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            name="addForm"
+            #addForm="ngForm"
+            (ngSubmit)="onAddIngreso(addForm)"
+          >
+            <!-- Primer Campo - texto -->
+            <span class="primerElemento">Concepto:</span>
+            <div class="form-check form-check-inline my-2">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.concepto"
+                name="concepto"
+                id="concepto"
+                #concepto="ngModel"
+                required
+
+                placeholder="Introduzca un concepto."
+              />
+            </div>
+            &nbsp;
+            <br/>
+
+            <!-- Segundo Campo -  -->
+            <span class="segundoElemento">Importe:</span>
+            <div class="form-check form-check-inline my-2">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.importe"
+                name="importe"
+                id="importe"
+                #importe="ngModel"
+                required
+
+                placeholder="Introduzca un importe."
+              />
+            </div>
+            <br/>
+
+             <!-- Tercer Campo -  -->
+             <span class="tercer Elemento">Fecha del ingreso:</span>
+             <div class="form-check form-check-inline my-2">
+               <input
+                 type="text"
+                 class="form-control"
+                 [(ngModel)]="movimientoSeleccionado.fecha"
+                 name="fecha"
+                 id="fecha"
+                 #fecha="ngModel"
+                 required
+
+                 placeholder="dd/MM/YYYY"
+               />
+             </div>
+             <br/>
+
+             <!-- Cuarto Campo -  -->
+             <span class="cuartoElemento">Estado:</span>
+             <div class="form-check form-check-inline my-2">
+               <input
+                 type="text"
+                 class="form-control"
+                 [(ngModel)]="movimientoSeleccionado.estado"
+                 name="estado"
+                 id="estado"
+                 #estado="ngModel"
+                 required
+
+                 placeholder="Seleccione el estado del ingreso."
+               />
+             </div>
+
+
+            <br />
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="addForm.invalid"
+            >
+              <span *ngIf="!movimientoSeleccionado.movimientoId">Crear</span>
+              <span *ngIf="movimientoSeleccionado.movimientoId">Actualizar</span>
+            </button>
+            &nbsp;
+            <button class="btn btn-primary" type="button" (click)="onClear()">
+              Borrar formulario
+            </button>
+            &nbsp;
+            <button
+              type="button"
+              id="addIngresoForm"
+              class="btn btn-secondary"
+              (click)="onClear()"
+              data-bs-dismiss="modal"
+              #cancelar
+            >
+              Cancelar
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <!-- Si el formulario es invalido [disabled], el boton se inhabilita -->
+          <!-- de tipo submit para el evento ngSubmit de la etiqueta <form>, que enviara el addForm en formato Json al back -->
+        </div>
+<main>
+

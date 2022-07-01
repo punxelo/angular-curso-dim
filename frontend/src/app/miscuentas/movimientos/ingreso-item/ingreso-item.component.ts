@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { IngresoImpl } from '../../models/ingreso-impl';
-import { FaDuotoneIconComponent } from '@fortawesome/angular-fontawesome/icon/duotone-icon.component';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { UpperCasePipe } from '@angular/common';
+import { NgForm } from '@angular/forms';
+import { Ingreso } from '../../models/ingreso';
 
 @Component({
   selector: 'app-ingreso-item',
@@ -19,6 +19,7 @@ export class IngresoItemComponent implements OnInit {
   @Input() ingreso: IngresoImpl = new IngresoImpl();
   @Output() ingresoEliminar = new EventEmitter<IngresoImpl>();
   @Output() ingresoEditar = new EventEmitter<IngresoImpl>();
+  @ViewChild('updateForm', { static: false }) updateForm: NgForm | undefined;
 
   constructor() { }
 
@@ -31,7 +32,13 @@ export class IngresoItemComponent implements OnInit {
     }
   }
 
-  editarIngreso(): void{
+  editarIngreso(updateForm: any): void{
+   // updateForm.value.id = this.ingreso.movimientoId;
+    debugger;
     this.ingresoEditar.emit(this.ingreso);
+  }
+
+  onClear() {
+    this.updateForm?.reset();
   }
 }

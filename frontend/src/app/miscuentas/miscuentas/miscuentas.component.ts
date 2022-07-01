@@ -52,4 +52,4 @@ export class MiscuentasComponent implements OnInit {
   }
   });
   }
-  }
+}
