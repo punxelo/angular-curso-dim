@@ -122,9 +122,38 @@ export class MovimientoService {
     );
   }
 
+  addGasto(gasto: GastoImpl): Observable<any> {
+    return this.http.post(
+      `${this.urlEndPointGastos}`, gasto).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
+  }
+
   //PUTs
   updateIngreso(ingreso: IngresoImpl): Observable<any> {
     return this.http.patch(`${this.urlEndPointIngresos}/${ingreso.movimientoId}`, ingreso).pipe(
+      catchError((e) => {
+        if (e.status === 400) {
+          return throwError(() => new Error(e));
+        }
+        if (e.error.mensaje) {
+          console.error(e.error.mensaje);
+        }
+        return throwError(() => new Error(e));
+      })
+    );
+  }
+
+  updateGasto(gasto: GastoImpl): Observable<any> {
+    return this.http.patch(`${this.urlEndPointGastos}/${gasto.movimientoId}`, gasto).pipe(
       catchError((e) => {
         if (e.status === 400) {
           return throwError(() => new Error(e));

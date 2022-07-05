@@ -19,6 +19,7 @@
       <div *ngFor="let gasto of gastos">
           <app-gasto-item
               [gasto]="gasto"
+              (gastoEditar)="onGastoEditar($event)"
               (gastoEliminar)="onGastoEliminar($event)"
               >
           </app-gasto-item>
@@ -45,6 +46,17 @@
         Añadir Ingreso
       </button>
     </span>
+    <span class="pe-2">
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#addGastoModal"
+        #nuevoGasto
+      >
+        Añadir Gasto
+      </button>
+    </span>
   </div>
 
 
@@ -56,12 +68,14 @@
     role="dialog"
     aria-labelledby="addIngresoLabel"
     aria-hidden="true"
-  >
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+  >   <!-- el data-backdrop y el keyboard para que no se cierre pinchando fuera del modal y con ESC -->
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h2 class="modal-title" id="addIngreso">
-            <span *ngIf="!movimientoSeleccionado.movimientoId">Nuevo Ingreso</span>
+            <span *ngIf="!movimientoSeleccionado.movimientoId"> Nuevo Ingreso</span>
             <span *ngIf="movimientoSeleccionado.movimientoId"> Modifique aquí su ingreso:</span>
           </h2>
           <button
@@ -69,6 +83,7 @@
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            (click)="onClear()"
           ></button>
         </div>
         <div class="modal-body">
@@ -78,72 +93,129 @@
             (ngSubmit)="onAddIngreso(addForm)"
           >
             <!-- Primer Campo - texto -->
-            <span class="primerElemento">Concepto:</span>
-            <div class="form-check form-check-inline my-2">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="movimientoSeleccionado.concepto"
-                name="concepto"
-                id="concepto"
-                #concepto="ngModel"
-                required
+            <div class="row mb-4">
+              <span class="primerElemento col-sm-3 text-end">Concepto:</span>
+              <div class="col-sm-6 form-check form-check-inline">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="movimientoSeleccionado.concepto"
+                  name="concepto"
+                  id="concepto"
+                  minlength="4"
+                  maxlength="30"
+                  #concepto="ngModel"
+                  required
 
-                placeholder="Introduzca un concepto."
-              />
+                  placeholder="Introduzca un concepto"
+                />
+                <div class="text-danger"
+                  *ngIf="concepto.invalid && (concepto.dirty || concepto.touched)">
+                  <div *ngIf="concepto.errors?.['required']">
+                    Debe introducir un concepto.
+                  </div>
+                  <div *ngIf="concepto.errors?.['minlength']">
+                    El concepto debe tener entre 4 y 30 caracteres.
+                  </div>
+                </div>
+              </div>
             </div>
             &nbsp;
             <br/>
 
             <!-- Segundo Campo -  -->
-            <span class="segundoElemento">Importe:</span>
-            <div class="form-check form-check-inline my-2">
-              <input
-                type="text"
-                class="form-control"
-                [(ngModel)]="movimientoSeleccionado.importe"
-                name="importe"
-                id="importe"
-                #importe="ngModel"
-                required
+            <div class="row mb-4">
+              <span class="segundoElemento col-sm-3 text-end">Importe:</span>
+              <div class="col-sm-6 form-check form-check-inline">
+                <div class ="input-group">
+                <span class="input-group-text">€</span>
+                <input
+                  type="number"
+                  step="0.01"
+                  class="form-control"
+                  [(ngModel)]="movimientoSeleccionado.importe"
+                  name="importe"
+                  id="importe"
+                  min="0"
+                  max="99999"
+                  #importe="ngModel"
+                  required
+                  [ngClass]="{
+                    'is-invalid': importe.invalid && (importe.dirty || importe.touched),
+                    'is-valid': !importe.invalid }"
 
-                placeholder="Introduzca un importe."
-              />
+                  placeholder="Introduzca un importe en €"
+                />
+              </div>
+                <div class="text-danger"
+                    *ngIf="importe.invalid && (importe.dirty || importe.touched)">
+                    <div *ngIf="importe.errors?.['min']">
+                      Los importes deben ser positivos entre 0 y 99.999 €
+                    </div>
+                    <div *ngIf="importe.errors?.['max']">
+                      Los importes deben ser positivos entre 0 y 99.999 €
+                    </div>
+                </div>
+              </div>
             </div>
             <br/>
 
              <!-- Tercer Campo -  -->
-             <span class="tercer Elemento">Fecha del ingreso:</span>
-             <div class="form-check form-check-inline my-2">
-               <input
-                 type="text"
-                 class="form-control"
-                 [(ngModel)]="movimientoSeleccionado.fecha"
-                 name="fecha"
-                 id="fecha"
-                 #fecha="ngModel"
-                 required
+             <div class="row mb-4">
+              <span class="tercerElemento col-sm-3 text-end">Fecha del ingreso:</span>
+              <div class="col-sm-6 form-check form-check-inline">
+                <input
+                  type="date"
+                  class="form-control"
+                  [(ngModel)]="movimientoSeleccionado.fecha"
+                  name="fecha"
+                  id="fecha"
+                  #fecha="ngModel"
+                  required
+                  [ngClass]="{
+                    'is-invalid': fecha.invalid && (fecha.dirty || fecha.touched),
+                    'is-valid': !fecha.invalid }"
 
-                 placeholder="dd/MM/YYYY"
-               />
-             </div>
+                  placeholder="dd/MM/YYYY"
+                />
+              </div>
+            </div>
              <br/>
 
              <!-- Cuarto Campo -  -->
-             <span class="cuartoElemento">Estado:</span>
-             <div class="form-check form-check-inline my-2">
-               <input
-                 type="text"
-                 class="form-control"
-                 [(ngModel)]="movimientoSeleccionado.estado"
-                 name="estado"
-                 id="estado"
-                 #estado="ngModel"
-                 required
+             <div class="row mb-4">
+              <span class="cuartoElemento col-sm-3 text-end">Estado:</span>
+              <div class="col-sm-6 form-check form-check-inline">
+                <select class="form-select"
+                aria-label="Default select"
+                [(ngModel)]="movimientoSeleccionado.estado"
+                name="estado"
+                id="estado"
+                #estado="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid': estado.invalid && (estado.dirty || estado.touched),
+                  'is-valid': !estado.invalid }"
 
-                 placeholder="Seleccione el estado del ingreso."
-               />
-             </div>
+                >
+                  <option value="" selected>Seleccione el estado del ingreso</option>
+                  <option value="0">PENDIENTE</option>
+                  <option value="1">INGRESADO</option>
+                  <option value="2">CANCELADO</option>
+                </select>
+                <!-- <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="movimientoSeleccionado.estado"
+                  name="estado"
+                  id="estado"
+                  #estado="ngModel"
+                  required
+
+                  placeholder="Seleccione el estado del ingreso."
+                /> -->
+              </div>
+            </div>
 
 
             <br />
@@ -176,5 +248,194 @@
           <!-- Si el formulario es invalido [disabled], el boton se inhabilita -->
           <!-- de tipo submit para el evento ngSubmit de la etiqueta <form>, que enviara el addForm en formato Json al back -->
         </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- MODAL (con form) -->
+  <div
+  class="modal fade"
+  id="addGastoModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addGastoLabel"
+  aria-hidden="true"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+>   <!-- el data-backdrop y el keyboard para que no se cierre pinchando fuera del modal y con ESC -->
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="addGasto">
+          <span *ngIf="!movimientoSeleccionado.movimientoId"> Nuevo Gasto</span>
+          <span *ngIf="movimientoSeleccionado.movimientoId"> Modifique aquí su gasto:</span>
+        </h2>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="onClear()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form
+          name="addFormGasto"
+          #addFormGasto="ngForm"
+          (ngSubmit)="onAddGasto(addFormGasto)"
+        >
+          <!-- Primer Campo - texto -->
+          <div class="row mb-4">
+            <span class="primerElemento col-sm-3 text-end">Concepto:</span>
+            <div class="col-sm-6 form-check form-check-inline">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.concepto"
+                name="concepto"
+                id="concepto"
+                minlength="4"
+                maxlength="30"
+                #concepto="ngModel"
+                required
+
+                placeholder="Introduzca un concepto"
+              />
+              <div class="text-danger"
+                *ngIf="concepto.invalid && (concepto.dirty || concepto.touched)">
+                <div *ngIf="concepto.errors?.['required']">
+                  Debe introducir un concepto.
+                </div>
+                <div *ngIf="concepto.errors?.['minlength']">
+                  El concepto debe tener entre 4 y 30 caracteres.
+                </div>
+              </div>
+            </div>
+          </div>
+          &nbsp;
+          <br/>
+
+          <!-- Segundo Campo -  -->
+          <div class="row mb-4">
+            <span class="segundoElemento col-sm-3 text-end">Importe:</span>
+            <div class="col-sm-6 form-check form-check-inline">
+              <div class ="input-group">
+              <span class="input-group-text">€</span>
+              <input
+                type="number"
+                step="0.01"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.importe"
+                name="importe"
+                id="importe"
+                min="0"
+                max="99999"
+                #importe="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid': importe.invalid && (importe.dirty || importe.touched),
+                  'is-valid': !importe.invalid }"
+
+                placeholder="Introduzca un importe en €"
+              />
+            </div>
+              <div class="text-danger"
+                  *ngIf="importe.invalid && (importe.dirty || importe.touched)">
+                  <div *ngIf="importe.errors?.['min']">
+                    Los importes deben ser positivos entre 0 y 99.999 €
+                  </div>
+                  <div *ngIf="importe.errors?.['max']">
+                    Los importes deben ser positivos entre 0 y 99.999 €
+                  </div>
+              </div>
+            </div>
+          </div>
+          <br/>
+
+           <!-- Tercer Campo -  -->
+           <div class="row mb-4">
+            <span class="tercerElemento col-sm-3 text-end">Fecha del ingreso:</span>
+            <div class="col-sm-6 form-check form-check-inline">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.fecha"
+                name="fecha"
+                id="fecha"
+                #fecha="ngModel"
+                required
+                [ngClass]="{
+                  'is-invalid': fecha.invalid && (fecha.dirty || fecha.touched),
+                  'is-valid': !fecha.invalid }"
+
+                placeholder="dd/MM/YYYY"
+              />
+            </div>
+          </div>
+           <br/>
+
+           <!-- Cuarto Campo -  -->
+           <div class="row mb-4">
+            <span class="cuartoElemento col-sm-3 text-end">Usuario:</span>
+            <div class="col-sm-6 form-check form-check-inline">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="movimientoSeleccionado.usuario"
+                name="usuario"
+                id="usuario"
+                minlength="4"
+                maxlength="30"
+                #concepto="ngModel"
+                required
+
+                placeholder="Introduzca un usuario"
+              />
+              <div class="text-danger"
+                *ngIf="concepto.invalid && (concepto.dirty || concepto.touched)">
+                <div *ngIf="concepto.errors?.['required']">
+                  Debe introducir un usuario.
+                </div>
+                <div *ngIf="concepto.errors?.['minlength']">
+                  El usuario debe tener entre 4 y 30 caracteres.
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <br />
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="addFormGasto.invalid"
+          >
+            <span *ngIf="!movimientoSeleccionado.movimientoId">Crear</span>
+            <span *ngIf="movimientoSeleccionado.movimientoId">Actualizar</span>
+          </button>
+          &nbsp;
+          <button class="btn btn-primary" type="button" (click)="onClear()">
+            Borrar formulario
+          </button>
+          &nbsp;
+          <button
+            type="button"
+            id="addGastoForm"
+            class="btn btn-secondary"
+            (click)="onClear()"
+            data-bs-dismiss="modal"
+            #cancelar
+          >
+            Cancelar
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <!-- Si el formulario es invalido [disabled], el boton se inhabilita -->
+        <!-- de tipo submit para el evento ngSubmit de la etiqueta <form>, que enviara el addForm en formato Json al back -->
+      </div>
+    </div>
+  </div>
+
 <main>
 

@@ -3,16 +3,16 @@
 
       <div class="row justify-content-center">
           <div class="col-5">
-              <li class="list-group-item">{{ gasto.fecha }} {{ gasto.concepto }}{{ gasto.usuario }}{{ gasto.importe }}</li>
+              <li class="list-group-item">{{ gasto.fecha | date: 'dd-MM-yyyy' }} {{ gasto.concepto }}{{ gasto.usuario }}{{ gasto.importe }}</li>
           </div>
           <div class="col-1">
             <a>
-                <fa-icon [icon]="faEditPen" class="fa-2x" (click)="editarIngreso()"></fa-icon>
+                <fa-icon [icon]="faEditPen" class="fa-2x" (click)="editarGasto(gasto)"></fa-icon>
             </a>
           </div>
           <div class="col-1">
             <a>
-                <fa-icon [icon]="faBorrarTrash" class="fa-2x" (click)="eliminarIngreso()"></fa-icon>
+                <fa-icon [icon]="faBorrarTrash" class="fa-2x" (click)="eliminarGasto()"></fa-icon>
             </a>
           </div>
       </div>

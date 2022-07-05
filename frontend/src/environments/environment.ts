@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   logo: '../assets/logoGVNEG.jpg',
-  //host: 'https://gvneg.herokuapp.com/api/',
-  host: 'http://localhost:8080/api/',
+  host: 'https://gvneg.herokuapp.com/api/',
+  // host: 'http://localhost:8080/api/',
   itemsPorPagina: 10
 };
 

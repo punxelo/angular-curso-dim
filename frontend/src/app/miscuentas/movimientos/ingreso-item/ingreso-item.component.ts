@@ -19,7 +19,7 @@ export class IngresoItemComponent implements OnInit {
   @Input() ingreso: IngresoImpl = new IngresoImpl();
   @Output() ingresoEliminar = new EventEmitter<IngresoImpl>();
   @Output() ingresoEditar = new EventEmitter<IngresoImpl>();
-  @ViewChild('updateForm', { static: false }) updateForm: NgForm | undefined;
+  @ViewChild('updateFormIngreso', { static: false }) updateFormIngreso: NgForm | undefined;
 
   constructor() { }
 
@@ -27,18 +27,18 @@ export class IngresoItemComponent implements OnInit {
   }
 
   eliminarIngreso(): void{
-    if (confirm(`Eliminar el siguiente ingreso:  ${this.ingreso.concepto}`)){
+    // if (confirm(`Eliminar el siguiente ingreso:  ${this.ingreso.concepto}`)){
       this.ingresoEliminar.emit(this.ingreso);
-    }
+    // }
   }
 
-  editarIngreso(updateForm: any): void{
-   // updateForm.value.id = this.ingreso.movimientoId;
+  editarIngreso(updateFormIngreso: any): void{
+   // updateFormIngreso.value.id = this.ingreso.movimientoId;
     debugger;
     this.ingresoEditar.emit(this.ingreso);
   }
 
   onClear() {
-    this.updateForm?.reset();
+    this.updateFormIngreso?.reset();
   }
 }

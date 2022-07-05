@@ -23,9 +23,11 @@ export class MovimientosComponent implements OnInit {
   gastosNuevos: GastoImpl = new GastoImpl();
   private host: string = environment.host;
   private urlEndPoint: string = `${this.host}cuentas`
-  @ViewChild('addForm') addForm?: NgForm;
+  @ViewChild('addFormIngreso') addFormIngreso?: NgForm;
+  @ViewChild('addFormGasto') addFormGasto?: NgForm;
   @ViewChild('cancelar', { static: false }) botonCancelar: ElementRef | undefined;
   @ViewChild('nuevo', { static: false }) botonNuevoIngreso: ElementRef | undefined;
+  @ViewChild('nuevoGasto', { static: false }) botonNuevoGasto: ElementRef | undefined;
   id:string='';
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -55,10 +57,12 @@ export class MovimientosComponent implements OnInit {
   }
 
   onGastoEliminar(gasto: GastoImpl){
-    this.movimientoService.deleteGasto(gasto.movimientoId).subscribe();
+    this.movimientoService.deleteGasto(gasto.movimientoId).subscribe(
+      () => {this.listarMovimientos();}
+    );
   }
 
-  onAddIngreso(addForm: NgForm) {
+  onAddIngreso(addFormIngreso: NgForm) {
     debugger;
     this.movimientoSeleccionado.cuenta = `${this.urlEndPoint}/${this.id}`
     if(!this.movimientoSeleccionado.movimientoId){
@@ -81,10 +85,37 @@ export class MovimientosComponent implements OnInit {
         } );
     }
   }
+
+  onAddGasto(addFormGasto: NgForm) {
+    debugger;
+    this.movimientoSeleccionado.cuenta = `${this.urlEndPoint}/${this.id}`
+    if(!this.movimientoSeleccionado.movimientoId){
+      this.movimientoService.addGasto(this.movimientoSeleccionado).subscribe(
+        (response) =>{
+          debugger;
+          const ing = this.movimientoService.mapearGastos(response);
+          this.movimientoSeleccionado = new MovimientoImpl();
+          this.botonCancelar?.nativeElement.click();
+          this.listarMovimientos();
+        } );
+    }else{
+      this.movimientoService.updateGasto(this.movimientoSeleccionado).subscribe(
+        (response) =>{
+          debugger;
+          const ing = this.movimientoService.mapearGastos(response);
+          this.movimientoSeleccionado = new MovimientoImpl();
+          this.botonCancelar?.nativeElement.click();
+          this.listarMovimientos();
+        } );
+    }
+  }
+
   onClear() {
     debugger;
     this.movimientoSeleccionado = new MovimientoImpl();
-    this.addForm?.reset();
+    this.addFormGasto?.reset();
+    this.addFormIngreso?.reset();
+
   }
 
   onIngresoEditar(movimiento: any) {
@@ -92,5 +123,12 @@ export class MovimientosComponent implements OnInit {
     this.movimientoSeleccionado = movimiento;
     this.botonNuevoIngreso?.nativeElement.click();
   }
+
+  onGastoEditar(movimiento: any) {
+    debugger;
+    this.movimientoSeleccionado = movimiento;
+    this.botonNuevoGasto?.nativeElement.click();
+  }
+
 
 }

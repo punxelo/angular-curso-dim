@@ -2,9 +2,23 @@
   <div class="container mt-auto">
 
       <div class="row justify-content-center">
-          <div class="col-5">
-              <li class="list-group-item">{{ ingreso.fecha }} {{ ingreso.concepto }}{{ ingreso.estado }}{{ ingreso.importe }}</li>
+          <div class="col-2">{{ ingreso.fecha | date: 'dd-MM-yyyy'}}
           </div>
+          <div class="col-3">
+            <li class="list-group-item">{{ ingreso.concepto }}</li>
+          </div>
+          <div class="col-3">
+            <li class="list-group-item">{{ ingreso.estado }}</li>
+          </div>
+          <div class="col-1">
+            <li class="list-group-item">{{ ingreso.importe}}</li>
+          </div>
+
+
+
+
+
+
           <div class="col-1">
               <a>
                   <fa-icon
@@ -28,3 +42,33 @@
   </div>
 <main>
 
+
+<!-- <main>
+  <div class="container mt-auto">
+
+      <div class="row justify-content-center">
+          <div class="col-5">
+              <li class="list-group-item">{{ ingreso.fecha | date: 'dd-MM-yyyy'}} {{ ingreso.concepto }}{{ ingreso.estado }}{{ ingreso.importe }}</li>
+          </div>
+          <div class="col-1">
+              <a>
+                  <fa-icon
+                  [icon]="faEditPen"
+                  class="fa-2x"
+                  (click)="editarIngreso(ingreso)"
+                  ></fa-icon>
+              </a>
+          </div>
+          <div class="col-1">
+              <a>
+                  <fa-icon
+                  [icon]="faBorrarTrash"
+                  class="fa-2x"
+                  (click)="eliminarIngreso()"
+                  ></fa-icon>
+              </a>
+          </div>
+      </div>
+
+  </div>
+<main> -->
