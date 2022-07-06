@@ -14,6 +14,8 @@ export class GastoItemComponent implements OnInit {
   faEditPen = faPenToSquare;
   faBorrarTrash = faTrashCan;
 
+  @Input() index: number=0;
+
   @Input() gasto: GastoImpl = new GastoImpl();
   @Output() gastoEliminar = new EventEmitter<GastoImpl>();
   @Output() gastoEditar = new EventEmitter<GastoImpl>();
@@ -22,6 +24,7 @@ export class GastoItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.index);
   }
 
   eliminarGasto(): void{

@@ -5,3 +5,10 @@ div {
 .gasto{
   color: red;
 }
+
+.par{
+  background-color: white;
+}
+.impar{
+  background-color: rgb(251, 248, 248);
+}

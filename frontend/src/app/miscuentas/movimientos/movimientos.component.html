@@ -26,8 +26,9 @@
 
       </div>
 
-      <div *ngFor="let gasto of gastos">
+      <div *ngFor="let gasto of gastos; let i = index">
           <app-gasto-item
+              [index]="i"
               [gasto]="gasto"
               (gastoEditar)="onGastoEditar($event)"
               (gastoEliminar)="onGastoEliminar($event)"
