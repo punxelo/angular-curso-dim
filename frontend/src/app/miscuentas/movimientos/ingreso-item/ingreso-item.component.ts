@@ -15,6 +15,7 @@ export class IngresoItemComponent implements OnInit {
   faEditPen = faPenToSquare;
   faBorrarTrash = faTrashCan;
 
+  @Input() index: number=0;
 
   @Input() ingreso: IngresoImpl = new IngresoImpl();
   @Output() ingresoEliminar = new EventEmitter<IngresoImpl>();
@@ -24,6 +25,7 @@ export class IngresoItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.index);
   }
 
   eliminarIngreso(): void{

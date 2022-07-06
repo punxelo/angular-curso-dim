@@ -5,3 +5,10 @@ div {
 .ingreso{
   color: green;
 }
+
+.par{
+  background-color: white;
+}
+.impar{
+  background-color: grey;
+}

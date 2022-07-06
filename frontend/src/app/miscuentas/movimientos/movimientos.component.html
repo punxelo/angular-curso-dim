@@ -12,8 +12,9 @@
         </div>
       </section>
 
-      <div *ngFor="let ingreso of ingresos">
+      <div *ngFor="let ingreso of ingresos; let i = index" >
           <app-ingreso-item
+              [index]="i"
               [ingreso]="ingreso"
               (ingresoEditar)="onIngresoEditar($event)"
               (ingresoEliminar)="onIngresoEliminar($event)"
@@ -208,9 +209,9 @@
 
                 >
                   <option value="" selected>Seleccione el estado del ingreso</option>
-                  <option value="0">PENDIENTE</option>
-                  <option value="1">INGRESADO</option>
-                  <option value="2">CANCELADO</option>
+                  <option value="PENDIENTE">PENDIENTE</option>
+                  <option value="INGRESADO">INGRESADO</option>
+                  <option value="CANCELADO">CANCELADO</option>
                 </select>
                 <!-- <input
                   type="text"
@@ -231,7 +232,7 @@
             <button
               type="submit"
               class="btn btn-primary"
-              [disabled]="addForm.invalid"
+              [disabled]="addFormGasto.invalid"
             >
               <span *ngIf="!movimientoSeleccionado.movimientoId">Crear</span>
               <span *ngIf="movimientoSeleccionado.movimientoId">Actualizar</span>
@@ -433,7 +434,7 @@
             class="btn btn-secondary"
             (click)="onClear()"
             data-bs-dismiss="modal"
-            #cancelar
+            #cancelarGasto
           >
             Cancelar
           </button>

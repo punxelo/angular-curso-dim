@@ -26,6 +26,7 @@ export class MovimientosComponent implements OnInit {
   @ViewChild('addFormIngreso') addFormIngreso?: NgForm;
   @ViewChild('addFormGasto') addFormGasto?: NgForm;
   @ViewChild('cancelar', { static: false }) botonCancelar: ElementRef | undefined;
+  @ViewChild('cancelarGasto', { static: false }) botonCancelarGasto: ElementRef | undefined;
   @ViewChild('nuevo', { static: false }) botonNuevoIngreso: ElementRef | undefined;
   @ViewChild('nuevoGasto', { static: false }) botonNuevoGasto: ElementRef | undefined;
   id:string='';
@@ -95,7 +96,7 @@ export class MovimientosComponent implements OnInit {
           debugger;
           const ing = this.movimientoService.mapearGastos(response);
           this.movimientoSeleccionado = new MovimientoImpl();
-          this.botonCancelar?.nativeElement.click();
+          this.botonCancelarGasto?.nativeElement.click();
           this.listarMovimientos();
         } );
     }else{
@@ -104,7 +105,7 @@ export class MovimientosComponent implements OnInit {
           debugger;
           const ing = this.movimientoService.mapearGastos(response);
           this.movimientoSeleccionado = new MovimientoImpl();
-          this.botonCancelar?.nativeElement.click();
+          this.botonCancelarGasto?.nativeElement.click();
           this.listarMovimientos();
         } );
     }
