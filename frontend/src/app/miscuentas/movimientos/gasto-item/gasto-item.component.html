@@ -1,4 +1,52 @@
 <main>
+  <div class="row mb-2">
+
+    <hr class='w-100'>
+          <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 text-center">
+            {{ gasto.fecha | date: 'dd-MM-yyyy'}}
+          </div>
+          <div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2 text-center">
+            {{ gasto.concepto }}
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 text-center">
+            Por: {{ gasto.usuario }}
+          </div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 text-center gasto">
+            {{ gasto.importe}}
+          </div>
+
+
+
+
+
+          <div class="col-1">
+              <a>
+                  <fa-icon
+                  [icon]="faEditPen"
+                  class="fa-2x"
+                  (click)="editarGasto(gasto)"
+                  ></fa-icon>
+              </a>
+          </div>
+          <div class="col-1">
+              <a>
+                  <fa-icon
+                  [icon]="faBorrarTrash"
+                  class="fa-2x"
+                  (click)="eliminarGasto()"
+                  ></fa-icon>
+              </a>
+          </div>
+
+
+
+
+  </div>
+<main>
+
+
+
+<!-- <main>
   <div class="container mt-auto">
 
       <div class="row justify-content-center">
@@ -17,4 +65,4 @@
           </div>
       </div>
   </div>
-</main>
+</main> -->

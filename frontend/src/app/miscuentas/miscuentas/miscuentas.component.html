@@ -1,15 +1,19 @@
 <body class="d-flex flex-column min-vh-100">
   <main>
-      <div class="container mt-auto">
+      <div class="container mt-5 mb-4">
 
-          <h2>RELACIÓN DE CUENTAS:</h2>
+          <h2 class="text-center">RELACIÓN DE CUENTAS:</h2>
 
       </div>
 <div *ngFor="let micuenta of miscuentas">
-  <app-micuenta-item routerLink="onMiCuentaConsultar($event)"
+ <div>
+    <h4>
+    <app-micuenta-item routerLink="onMiCuentaConsultar($event)"
     [micuenta]="micuenta"
     (micuentaConsultar)="onMiCuentaConsultar($event)"
-  ></app-micuenta-item>
+    ></app-micuenta-item>
+  </h4>
+</div>
 
   <!-- <pre>{{ micuenta | json }}</pre> -->
 </div>

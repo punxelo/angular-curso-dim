@@ -2,6 +2,15 @@
   <div class="container mt-auto">
       <br>
       <h3>Movimientos</h3>
+      <section>
+        <div class="row">
+          <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2">Fecha</div>
+          <div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2">Concepto</div>
+          <div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2"></div>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">Importe</div>
+          <div class="col-4 col-sm-4 col-md-3 col-lg-2 col-xl-2"></div>
+        </div>
+      </section>
 
       <div *ngFor="let ingreso of ingresos">
           <app-ingreso-item
@@ -136,8 +145,8 @@
                   [(ngModel)]="movimientoSeleccionado.importe"
                   name="importe"
                   id="importe"
-                  min="0"
-                  max="99999"
+                  min="0.01"
+                  max="99999.99"
                   #importe="ngModel"
                   required
                   [ngClass]="{
@@ -150,10 +159,10 @@
                 <div class="text-danger"
                     *ngIf="importe.invalid && (importe.dirty || importe.touched)">
                     <div *ngIf="importe.errors?.['min']">
-                      Los importes deben ser positivos entre 0 y 99.999 €
+                      Los importes deben ser positivos entre 0.01 y 99999.99€
                     </div>
                     <div *ngIf="importe.errors?.['max']">
-                      Los importes deben ser positivos entre 0 y 99.999 €
+                      Los importes deben ser positivos entre 0.01 y 99999.99 €
                     </div>
                 </div>
               </div>
@@ -328,8 +337,8 @@
                 [(ngModel)]="movimientoSeleccionado.importe"
                 name="importe"
                 id="importe"
-                min="0"
-                max="99999"
+                max="-0.01"
+                min="-99999.99"
                 #importe="ngModel"
                 required
                 [ngClass]="{
@@ -342,10 +351,10 @@
               <div class="text-danger"
                   *ngIf="importe.invalid && (importe.dirty || importe.touched)">
                   <div *ngIf="importe.errors?.['min']">
-                    Los importes deben ser positivos entre 0 y 99.999 €
+                    Los importes deben ser negativos entre -0.01 y -99999.99 €
                   </div>
                   <div *ngIf="importe.errors?.['max']">
-                    Los importes deben ser positivos entre 0 y 99.999 €
+                    Los importes de gatos deben ser negativos entre -0.01 y -99999.99 €
                   </div>
               </div>
             </div>

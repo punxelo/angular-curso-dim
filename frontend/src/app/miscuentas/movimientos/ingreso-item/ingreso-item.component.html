@@ -1,23 +1,19 @@
 <main>
-  <div class="container mt-auto">
+  <div class="row mb-2">
 
-      <div class="row justify-content-center">
-          <div class="col-2">{{ ingreso.fecha | date: 'dd-MM-yyyy'}}
+    <hr class='w-100'>
+          <div class="col-sm-6 col-md-3 col-lg-2 col-xl-2 text-center">
+            {{ ingreso.fecha | date: 'dd-MM-yyyy'}}
           </div>
-          <div class="col-3">
-            <li class="list-group-item">{{ ingreso.concepto }}</li>
+          <div class="col-6 col-sm-6 col-md-3 col-lg-2 col-xl-2 text-center">
+            {{ ingreso.concepto }}
           </div>
-          <div class="col-3">
-            <li class="list-group-item">{{ ingreso.estado }}</li>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 text-center">
+            {{ ingreso.estado }}
           </div>
-          <div class="col-1">
-            <li class="list-group-item">{{ ingreso.importe}}</li>
+          <div class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 text-center ingreso">
+            {{ ingreso.importe}}
           </div>
-
-
-
-
-
 
           <div class="col-1">
               <a>
@@ -37,8 +33,6 @@
                   ></fa-icon>
               </a>
           </div>
-      </div>
-
   </div>
 <main>
 

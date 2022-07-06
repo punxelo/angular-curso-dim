@@ -1,6 +1,11 @@
-.azul {
-  background-color: grey;
-  }
-  .verde {
-  color: white;
-  }
+section {
+  padding-top: 4em;
+  font-style: oblique;
+  font-size:larger;
+font-weight: bold;
+text-align: center;
+}
+a
+{
+  text-align: center;
+}
