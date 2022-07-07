@@ -99,9 +99,9 @@
         </div>
         <div class="modal-body">
           <form
-            name="addForm"
-            #addForm="ngForm"
-            (ngSubmit)="onAddIngreso(addForm)"
+            name="addFormIngreso"
+            #addFormIngreso="ngForm"
+            (ngSubmit)="onAddIngreso(addFormIngreso)"
           >
             <!-- Primer Campo - texto -->
             <div class="row mb-4">
@@ -233,7 +233,7 @@
             <button
               type="submit"
               class="btn btn-primary"
-              [disabled]="addFormGasto.invalid"
+              [disabled]="addFormIngreso.invalid"
             >
               <span *ngIf="!movimientoSeleccionado.movimientoId">Crear</span>
               <span *ngIf="movimientoSeleccionado.movimientoId">Actualizar</span>
