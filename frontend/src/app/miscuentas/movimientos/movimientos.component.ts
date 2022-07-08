@@ -116,8 +116,7 @@ export class MovimientosComponent implements OnInit {
     this.movimientoSeleccionado = new MovimientoImpl();
     this.addFormGasto?.reset();
     this.addFormIngreso?.reset();
-
-
+    this.ngOnInit();
   }
 
   onIngresoEditar(movimiento: any) {
