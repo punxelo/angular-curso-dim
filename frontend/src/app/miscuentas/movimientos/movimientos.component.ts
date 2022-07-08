@@ -117,6 +117,7 @@ export class MovimientosComponent implements OnInit {
     this.addFormGasto?.reset();
     this.addFormIngreso?.reset();
 
+
   }
 
   onIngresoEditar(movimiento: any) {
